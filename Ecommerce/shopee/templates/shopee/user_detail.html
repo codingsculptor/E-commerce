@@ -1,0 +1,29 @@
+<!-- user_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Detail</title>
+</head>
+<body>
+    <h1>User Detail</h1>
+    {% if user %}
+        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+    {% else %}
+        <p>User details not found.</p>
+    {% endif %}
+    {% if address %}
+        <h2>Address</h2>
+        <p>Street Address: {{ address.street_address }}</p>
+        <p>City: {{ address.city }}</p>
+        <p>State: {{ address.state }}</p>
+        <p>Country: {{ address.country }}</p>
+        <p>Zip Code: {{ address.zip_code }}</p>
+    {% else %}
+        <p>No address found for this user.</p>
+    {% endif %}
+</body>
+</html>
