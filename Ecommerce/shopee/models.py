@@ -22,9 +22,12 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
     zip_code = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'{self.street_address}, {self.city}, {self.state}, {self.country} {self.zip_code}'

@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import Product, Cart, CartItem, Address
 
+from django.contrib.auth.decorators import login_required
+
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'shopee/product_list.html', {'products': products})
@@ -13,10 +15,12 @@ def product_list(request):
 def cart_view(request):
     user = request.user
     cart = Cart.objects.filter(user=user).first()
+    cart_items = []
     if cart:
         cart_items = CartItem.objects.filter(cart=cart)
-    else:
-        cart_items = []
+        # Retrieve product images for cart items
+        for item in cart_items:
+            item.product.image_url = item.product.image.url
     return render(request, 'shopee/cart.html', {'cart_items': cart_items})
 
 def user_detail(request):
@@ -99,3 +103,40 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'shopee/register.html', {'form': form})
+
+
+@login_required
+def update_user_info(request):
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.save()
+        messages.success(request, 'User information updated successfully.')
+        return redirect('user_detail')
+    else:
+        return render(request, 'shopee/user_detail.html')
+
+def add_address(request):
+    user = request.user
+    if request.method == 'POST':
+        street_address = request.POST.get('street_address')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        country = request.POST.get('country')
+        zip_code = request.POST.get('zip_code')
+
+        # Check if user already has an address
+        address, created = Address.objects.get_or_create(user=user)
+        address.street_address = street_address
+        address.city = city
+        address.state = state
+        address.country = country
+        address.zip_code = zip_code
+        address.save()
+        
+        messages.success(request, 'Address updated successfully.')
+        return redirect('user_detail')
+    
+    return render(request, 'shopee/add_address.html')

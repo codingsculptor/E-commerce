@@ -12,10 +12,6 @@ body {
 
 .bg-container {
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     font-family: sans-serif;
 }
 
@@ -25,24 +21,26 @@ h1 {
     color: black;
 }
 
-.product-container {
+.products-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px;
     flex-wrap: wrap;
 }
 
 .card {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     padding: 10px;
-    flex-shrink: 1;
-    flex-grow: 0;
     border: 0px solid black;
     border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;    
     width: 200px;
+    margin: 10px;
+    height: 300px;
 }
 
 .card:hover {
@@ -55,7 +53,7 @@ h1 {
 }
 
 img {
-    height: 120px;
+    height: 100px;
     flex-shrink: 1;
     flex-grow: 1;
 }
@@ -73,6 +71,8 @@ h2 {
 p {
     font-size: 10px;
     text-align: center;
+    height: 30px;
+    overflow-y: auto;
 }
 
 .buy-btn {
