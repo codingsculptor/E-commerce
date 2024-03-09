@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<body>
+    <h2>Add or Update Address</h2>
+    <form id="addressForm" method="post">
+        {% csrf_token %}
+        <label for="id_street_address">Street Address:</label>
+        <input type="text" id="id_street_address" name="street_address" required><br>
+        <label for="id_city">City:</label>
+        <input type="text" id="id_city" name="city" required><br>
+        <label for="id_state">State:</label>
+        <input type="text" id="id_state" name="state" required><br>
+        <label for="id_country">Country:</label>
+        <input type="text" id="id_country" name="country" required><br>
+        <label for="id_zip_code">Zip Code:</label>
+        <input type="text" id="id_zip_code" name="zip_code" required><br>
+        <button type="submit" id="submitButton">Save Address</button>
+    </form>
+
+    <script>
+        // Function to validate form before submission
+        function validateForm() {
+            var form = document.getElementById("addressForm");
+            var inputs = form.getElementsByTagName("input");
+            var isValid = true;
+
+            for (var i = 0; i < inputs.length; i++) {
+                if (!inputs[i].value) {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            if (!isValid) {
+                alert("Please fill in all fields.");
+            }
+
+            return isValid;
+        }
+
+        // Add event listener to form submission
+        document.getElementById("submitButton").addEventListener("click", function(event) {
+            if (!validateForm()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    </script>
+</body>
+</html>
