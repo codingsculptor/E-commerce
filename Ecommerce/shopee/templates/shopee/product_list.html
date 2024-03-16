@@ -44,26 +44,28 @@
       </nav>
     <div class="bg-container">
         <h1>Product List</h1>
-        <div class="products-container">
-            {% for product in products %}            
-                <div class="card">
-                    <div class="img-container">
-                        <img src="{{ product.image.url }}">
+        <div class="products-list">
+            <div class="products-container">
+                {% for product in products %}            
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="{{ product.image.url }}">
+                        </div>
+                        <div class="product-details">
+                            <h2>{{ product.name }}</h2>
+                            <p>{{ product.description }}</p>
+                        </div>
+                        <div class="buy-btn">
+                            <h6>Price: {{ product.price }} Rs</h6>
+                            <form action="{% url 'add_to_cart' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <input class="btn" type="submit" value="Buy">
+                            </form>
+                        </div>
                     </div>
-                    <div class="product-details">
-                        <h2>{{ product.name }}</h2>
-                        <p>{{ product.description }}</p>
-                    </div>
-                    <div class="buy-btn">
-                        <h6>Price: {{ product.price }} Rs</h6>
-                        <form action="{% url 'add_to_cart' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="product_id" value="{{ product.id }}">
-                            <input class="btn" type="submit" value="Buy">
-                        </form>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>
